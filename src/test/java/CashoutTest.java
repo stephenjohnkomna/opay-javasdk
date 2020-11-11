@@ -13,32 +13,27 @@ import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.SignatureException;
 import java.util.HashMap;
+import java.util.TreeMap;
 
 public class CashoutTest {
     private Cashout cashout;
     private ConnectionClient connectionClient;
     private static JSONObject transactionCheckStatusInput;
-
-    @Before
-    public void setup()
-    {
-     /*   connectionClient = new ConnectionClient("http://sandbox.cashierapi.operapay.com/api/v3",
-                "256620072116000","OPAYPUB15953464969740.9412274406196679");
-
-
-        cashout = new Cashout(connectionClient);*/
-    }
+    private final String BASEURL ="http://sandbox.cashierapi.operapay.com/api/v3";
+    private final String MERCHANTID ="256620072116000";
+    private final String PUBLICKEY ="OPAYPUB15953464969740.9412274406196679";
+    private final String PRIVATEKEY ="OPAYPRV15953464969740.6928713062784362";
 
 
     @Test
     public void Test_Initialize_Transaction_Successful_Message()
     {
 
-        connectionClient = new ConnectionClient("http://sandbox.cashierapi.operapay.com/api/v3",
-                Util.getHeader("OPAYPUB15953464969740.9412274406196679","256620072116000"));
+        connectionClient = new ConnectionClient(BASEURL,
+                Util.getHeader(PUBLICKEY,MERCHANTID));
         cashout = new Cashout(connectionClient);
 
-        HashMap<String, Object> param = new HashMap<String, Object>();
+        TreeMap<String, Object> param = new TreeMap<String, Object>();
         param.put("reference",Util.generateTransactionRefrenceNo());
         param.put("mchShortName","Jerry's shop");
         param.put("productName","Apple AirPods Pro");
@@ -53,26 +48,26 @@ public class CashoutTest {
         param.put("returnUrl","https://you.domain.com/returnUrl");
         param.put("expireAt","10");
 
-
-
        JSONObject response = cashout.initializeTransaction(param);
        transactionCheckStatusInput = (JSONObject) response.get("data");
        assertEquals("SUCCESSFUL", response.get("message"));
     }
 
+
+
     @Test
     public void Test_Transaction_Check_Status_Successful() throws NoSuchAlgorithmException, SignatureException, InvalidKeyException {
 
         // Sorted in Alphabetic Order
-        HashMap<String, Object> param = new HashMap<String, Object>();
+        TreeMap<String, Object> param = new TreeMap<String, Object>();
         param.put("orderNo",transactionCheckStatusInput.get("orderNo"));
         param.put("reference",transactionCheckStatusInput.get("reference"));
 
         String paramString = Util.mapToJsonString(param);
-        String signature = Util.calculateHMAC(paramString,"OPAYPRV15953464969740.6928713062784362");
+        String signature = Util.calculateHMAC(paramString,PRIVATEKEY);
 
-        connectionClient = new ConnectionClient("http://sandbox.cashierapi.operapay.com/api/v3",
-                Util.getHeader(signature,"256620072116000"));
+        connectionClient = new ConnectionClient(BASEURL,
+                Util.getHeader(signature,MERCHANTID));
         cashout = new Cashout(connectionClient);
 
         JSONObject response = cashout.transactionStatus(param);
@@ -84,33 +79,19 @@ public class CashoutTest {
     public void Test_Transaction_Close_Successful() throws NoSuchAlgorithmException, SignatureException, InvalidKeyException {
 
         // Sorted in Alphabetic Order
-        HashMap<String, Object> param = new HashMap<String, Object>();
+        TreeMap<String, Object> param = new TreeMap<String, Object>();
         param.put("orderNo",transactionCheckStatusInput.get("orderNo"));
         param.put("reference",transactionCheckStatusInput.get("reference"));
 
         String paramString = Util.mapToJsonString(param);
-        String signature = Util.calculateHMAC(paramString,"OPAYPRV15953464969740.6928713062784362");
+        String signature = Util.calculateHMAC(paramString,PRIVATEKEY);
 
-        connectionClient = new ConnectionClient("http://sandbox.cashierapi.operapay.com/api/v3",
-                Util.getHeader(signature,"256620072116000"));
+        connectionClient = new ConnectionClient(BASEURL,
+                Util.getHeader(signature,MERCHANTID));
         cashout = new Cashout(connectionClient);
 
         JSONObject response = cashout.closeTransaction(param);
         assertEquals("SUCCESSFUL", response.get("message"));
     }
-
-
-
-
-/*
-@After
-   public void tearDown()
-       {
-           connectionClient.shutDown();
-           cashout=null;
-         //  transactionCheckStatusInput = null;
-       }*/
-
-
 
 }

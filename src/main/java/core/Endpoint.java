@@ -18,19 +18,19 @@ public class Endpoint {
     public static String OPAY_TRANSFER_STATUS_TOBANKS="/transfer/status/toBank";
 
     //ENDPOINT FOR TRANSFER COUNTRIES THAT OPAY CURRENTLY SUPPORT
-    public static String OPAY_INQUIRY_SUPPORT_COUNTRIES="/countries";
+    public static String OPAY_TRANSFER_SUPPORT_COUNTRIES="/countries";
 
     //ENDPOINT FOR BANKS THAT OPAY CURRENTLY SUPPORTS
-    public static String OPAY_INQUIRY_SUPPORT_BANKS="/banks";
+    public static String OPAY_TRANSFER_SUPPORT_BANKS="/banks";
 
 
   // ENDPOINT FOR THE BALANCES OF ALL YOUR OPAY ACCOUNTS
     public static String OPAY_INQUIRY_BALANCE_FOR_ALL_ACCOUNT="/balance";
 
-    // ENDPOINT TO VALIDATE OPAY USER
+    // ENDPOINT TO VALIDATE(QUERY) OPAY USER
     public static String OPAY_INQUIRY_VALIDATE_USER="/info/user";
 
-    // ENDPOINT TO VALIDATE OPAY MERCHANT
+    // ENDPOINT TO VALIDATE(QUERY) OPAY MERCHANT
     public static String OPAY_INQUIRY_VALIDATE_MERCHANT="/info/merchant";
 
     //  verifies specified account number and returns allocated account name.

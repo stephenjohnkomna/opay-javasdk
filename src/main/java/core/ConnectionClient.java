@@ -11,6 +11,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.TreeMap;
 
 public class ConnectionClient {
     private String baseUrl;
@@ -21,14 +22,41 @@ public class ConnectionClient {
         this.headers = headers;
     }
 
+    public JSONObject makePostRequest(TreeMap<String, Object> parameters, String endpoint) {
+        try {
+            HttpResponse<JsonNode> result =
+                    Unirest.post(this.baseUrl+endpoint)
+                            .headers(headers)
+                            .body(Util.mapToJsonString(parameters))
+                            .asJson();
+            return result.getBody().getObject();
+        } catch (UnirestException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
-    public JSONObject makePostRequest(HashMap<String, Object> parameters,String endpoint) {
+
+   /* public JSONObject makePostRequest(HashMap<String, Object> parameters,String endpoint) {
         try {
             HttpResponse<JsonNode> result =
                     Unirest.post(this.baseUrl+endpoint)
                            .headers(headers)
                     .body(Util.mapToJsonString(parameters))
                     .asJson();
+            return result.getBody().getObject();
+        } catch (UnirestException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }*/
+
+    public JSONObject makePostRequest(String endpoint) {
+        try {
+            HttpResponse<JsonNode> result =
+                    Unirest.post(this.baseUrl+endpoint)
+                            .headers(headers)
+                            .asJson();
             return result.getBody().getObject();
         } catch (UnirestException e) {
             e.printStackTrace();

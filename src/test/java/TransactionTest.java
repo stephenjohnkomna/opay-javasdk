@@ -1,0 +1,183 @@
+import core.ConnectionClient;
+import core.Util;
+import core.module.Cashout;
+import core.module.Transaction;
+import org.json.JSONObject;
+import org.junit.Before;
+import org.junit.Test;
+
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+import java.security.SignatureException;
+import java.util.HashMap;
+import java.util.TreeMap;
+import static org.junit.Assert.assertEquals;
+
+public class TransactionTest {
+    private Transaction transaction;
+    private ConnectionClient connectionClient;
+    private static JSONObject bankTransferStatusInput;
+    private static JSONObject walletTransferUserStatusInput;
+    private static JSONObject walletTransferMerchantStatusInput;
+
+    private final String BASEURL ="http://sandbox.cashierapi.operapay.com/api/v3";
+    private final String MERCHANTID ="256620072116000";
+    private final String PUBLICKEY ="OPAYPUB15953464969740.9412274406196679";
+    private final String PRIVATEKEY ="OPAYPRV15953464969740.6928713062784362";
+
+
+    @Test
+    public void Test_Transfer_To_Bank_Successful() throws NoSuchAlgorithmException, SignatureException, InvalidKeyException {
+        TreeMap<String, Object> receiver = new TreeMap<String, Object>();
+        receiver.put("bankAccountNumber","22222222222222");
+        receiver.put("bankCode","012");
+        receiver.put("name","test_20191123132233");
+
+        TreeMap<String, Object> param = new TreeMap<String, Object>();
+        param.put("amount","100");
+        param.put("country","NG");
+        param.put("currency","NGN");
+        param.put("reason","transfer reason message");
+        param.put("receiver",receiver);
+        param.put("reference",Util.generateTransactionRefrenceNo());
+
+        String paramString = Util.mapToJsonString(param);
+        String signature = Util.calculateHMAC(paramString,PRIVATEKEY);
+
+        connectionClient = new ConnectionClient(BASEURL, Util.getHeader(signature,MERCHANTID));
+        transaction = new Transaction(connectionClient);
+
+        JSONObject response = transaction.transferToBank(param);
+        bankTransferStatusInput =response;
+        assertEquals("SUCCESSFUL", response.get("message"));
+    }
+
+
+    @Test
+    public void Test_Bank_Transfer_Status_Successful() throws NoSuchAlgorithmException, SignatureException, InvalidKeyException {
+        TreeMap<String, Object> param = new TreeMap<String, Object>();
+        param.put("orderNo",bankTransferStatusInput.get("orderNo"));
+        param.put("reference",bankTransferStatusInput.get("reference"));
+
+        String paramString = Util.mapToJsonString(param);
+        String signature = Util.calculateHMAC(paramString,PRIVATEKEY);
+
+        connectionClient = new ConnectionClient(BASEURL,
+                Util.getHeader(signature,MERCHANTID));
+        transaction = new Transaction(connectionClient);
+
+        JSONObject response = transaction.transferToBankStatus(param);
+        assertEquals("SUCCESSFUL", response.get("message"));
+    }
+
+
+
+    @Test
+    public void Test_Transfer_To_User_Wallet_Successful() throws NoSuchAlgorithmException, SignatureException, InvalidKeyException {
+        TreeMap<String, Object> receiver = new TreeMap<String, Object>();
+        receiver.put("name","Andy Lee");
+        receiver.put("phoneNumber","+2340123456789");
+        receiver.put("type","USER");
+
+
+        TreeMap<String, Object> param = new TreeMap<String, Object>();
+        param.put("amount","100");
+        param.put("country","NG");
+        param.put("currency","NGN");
+        param.put("reason","transfer reason message");
+        param.put("receiver",receiver);
+        param.put("reference",Util.generateTransactionRefrenceNo());
+
+        String paramString = Util.mapToJsonString(param);
+        String signature = Util.calculateHMAC(paramString,PRIVATEKEY);
+
+        connectionClient = new ConnectionClient(BASEURL, Util.getHeader(signature,MERCHANTID));
+        transaction = new Transaction(connectionClient);
+
+        JSONObject response = transaction.transferToWallet(param);
+        walletTransferUserStatusInput =response;
+        assertEquals("SUCCESSFUL", response.get("message"));
+    }
+
+    @Test
+    public void Test_Query_Transfer_To_User_Wallet_Status_Successful() throws NoSuchAlgorithmException, SignatureException, InvalidKeyException {
+        // Sorted in Alphabetic Order
+        TreeMap<String, Object> param = new TreeMap<String, Object>();
+        param.put("orderNo",walletTransferUserStatusInput.get("orderNo"));
+        param.put("reference",walletTransferUserStatusInput.get("reference"));
+
+        String paramString = Util.mapToJsonString(param);
+        String signature = Util.calculateHMAC(paramString,PRIVATEKEY);
+
+        connectionClient = new ConnectionClient(BASEURL,
+                Util.getHeader(signature,MERCHANTID));
+        transaction = new Transaction(connectionClient);
+
+        JSONObject response = transaction.transferStatusToWallet(param);
+        assertEquals("SUCCESSFUL", response.get("message"));
+    }
+
+
+    @Test
+    public void Test_Transfer_To_Merchant_Wallet_Successful() throws NoSuchAlgorithmException, SignatureException, InvalidKeyException {
+        TreeMap<String, Object> receiver = new TreeMap<String, Object>();
+        receiver.put("name","Andy Lee");
+        receiver.put("merchantId",MERCHANTID);
+        receiver.put("type","MERCHANT");
+
+
+        TreeMap<String, Object> param = new TreeMap<String, Object>();
+        param.put("amount","100");
+        param.put("country","NG");
+        param.put("currency","NGN");
+        param.put("reason","transfer reason message");
+        param.put("receiver",receiver);
+        param.put("reference",Util.generateTransactionRefrenceNo());
+
+        String paramString = Util.mapToJsonString(param);
+        String signature = Util.calculateHMAC(paramString,PRIVATEKEY);
+
+        connectionClient = new ConnectionClient(BASEURL, Util.getHeader(signature,MERCHANTID));
+        transaction = new Transaction(connectionClient);
+
+        JSONObject response = transaction.transferToWallet(param);
+        walletTransferMerchantStatusInput =response;
+        assertEquals("SUCCESSFUL", response.get("message"));
+    }
+
+    @Test
+    public void Test_Query_Transfer_To_Merchant_Wallet_Status_Successful() throws NoSuchAlgorithmException, SignatureException, InvalidKeyException {
+        TreeMap<String, Object> param = new TreeMap<String, Object>();
+        param.put("orderNo",walletTransferMerchantStatusInput.get("orderNo"));
+        param.put("reference",walletTransferMerchantStatusInput.get("reference"));
+
+        String paramString = Util.mapToJsonString(param);
+        String signature = Util.calculateHMAC(paramString,PRIVATEKEY);
+
+        connectionClient = new ConnectionClient(BASEURL,
+                Util.getHeader(signature,MERCHANTID));
+        transaction = new Transaction(connectionClient);
+
+        JSONObject response = transaction.transferStatusToWallet(param);
+        assertEquals("SUCCESSFUL", response.get("message"));
+    }
+
+    @Test
+    public void Test_Get_All_Supporting_Banks() throws NoSuchAlgorithmException, SignatureException, InvalidKeyException {
+        connectionClient = new ConnectionClient(BASEURL, Util.getHeader(PUBLICKEY,MERCHANTID));
+        transaction = new Transaction(connectionClient);
+
+        JSONObject response = transaction.allSupportingBanks();
+        assertEquals("SUCCESSFUL", response.get("message"));
+    }
+
+
+    @Test
+    public void Test_Get_All_Supporting_Countries() throws NoSuchAlgorithmException, SignatureException, InvalidKeyException {
+        connectionClient = new ConnectionClient(BASEURL, Util.getHeader(PUBLICKEY,MERCHANTID));
+        transaction = new Transaction(connectionClient);
+
+        JSONObject response = transaction.allSupportingCountries();
+        assertEquals("SUCCESSFUL", response.get("message"));
+    }
+}
