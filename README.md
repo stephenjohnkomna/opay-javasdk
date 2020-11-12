@@ -115,6 +115,11 @@ Please consult the OPAY PAYMEMT API Documentation for details on setting up an a
 connectionClient.shutDown();
 ```
 
+### Unit Test
+```java
+ You can the Unit test for sample implementation of all the endpoints.
+```
+
 ## NOTE
 ```
   Ensure to keep your Secret key Safe. Please do not commit your secret with your code base.
