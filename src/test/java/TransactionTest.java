@@ -3,6 +3,7 @@ import core.Util;
 import core.module.Cashout;
 import core.module.Transaction;
 import org.json.JSONObject;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -180,4 +181,10 @@ public class TransactionTest {
         JSONObject response = transaction.allSupportingCountries();
         assertEquals("SUCCESSFUL", response.get("message"));
     }
+
+/*    @After
+    public void TearDown ()
+    {
+        connectionClient.shutDown();
+    }*/
 }

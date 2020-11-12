@@ -4,6 +4,7 @@ import core.module.Cashout;
 import core.module.Inquiry;
 import core.module.Transaction;
 import org.json.JSONObject;
+import org.junit.After;
 import org.junit.Test;
 
 import java.security.InvalidKeyException;
@@ -69,4 +70,10 @@ public class InquiryTest {
         assertEquals("SUCCESSFUL", response.get("message"));
     }
 
+  /*  @After
+    public void TearDown ()
+    {
+        connectionClient.shutDown();
+    }
+*/
 }

@@ -94,4 +94,10 @@ public class CashoutTest {
         assertEquals("SUCCESSFUL", response.get("message"));
     }
 
+/*    @After
+    public void TearDown ()
+    {
+        connectionClient.shutDown();
+    }*/
+
 }
