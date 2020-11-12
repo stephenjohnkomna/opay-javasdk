@@ -30,7 +30,7 @@ public class TransactionTest {
     public void Test_Transfer_To_Bank_Successful() throws NoSuchAlgorithmException, SignatureException, InvalidKeyException {
         TreeMap<String, Object> receiver = new TreeMap<String, Object>();
         receiver.put("bankAccountNumber","22222222222222");
-        receiver.put("bankCode","012");
+        receiver.put("bankCode","058");
         receiver.put("name","test_20191123132233");
 
         TreeMap<String, Object> param = new TreeMap<String, Object>();
@@ -48,7 +48,7 @@ public class TransactionTest {
         transaction = new Transaction(connectionClient);
 
         JSONObject response = transaction.transferToBank(param);
-        bankTransferStatusInput =response;
+        bankTransferStatusInput = (JSONObject) response.get("data");
         assertEquals("SUCCESSFUL", response.get("message"));
     }
 
@@ -66,7 +66,7 @@ public class TransactionTest {
                 Util.getHeader(signature,MERCHANTID));
         transaction = new Transaction(connectionClient);
 
-        JSONObject response = transaction.transferToBankStatus(param);
+        JSONObject response = transaction.checkBankTransferStatus(param);
         assertEquals("SUCCESSFUL", response.get("message"));
     }
 
@@ -76,7 +76,7 @@ public class TransactionTest {
     public void Test_Transfer_To_User_Wallet_Successful() throws NoSuchAlgorithmException, SignatureException, InvalidKeyException {
         TreeMap<String, Object> receiver = new TreeMap<String, Object>();
         receiver.put("name","Andy Lee");
-        receiver.put("phoneNumber","+2340123456789");
+        receiver.put("phoneNumber","+2348131393827");
         receiver.put("type","USER");
 
 
@@ -95,7 +95,7 @@ public class TransactionTest {
         transaction = new Transaction(connectionClient);
 
         JSONObject response = transaction.transferToWallet(param);
-        walletTransferUserStatusInput =response;
+        walletTransferUserStatusInput =(JSONObject) response.get("data");
         assertEquals("SUCCESSFUL", response.get("message"));
     }
 
@@ -113,7 +113,7 @@ public class TransactionTest {
                 Util.getHeader(signature,MERCHANTID));
         transaction = new Transaction(connectionClient);
 
-        JSONObject response = transaction.transferStatusToWallet(param);
+        JSONObject response = transaction.checkWalletTransferStatus(param);
         assertEquals("SUCCESSFUL", response.get("message"));
     }
 
@@ -122,7 +122,7 @@ public class TransactionTest {
     public void Test_Transfer_To_Merchant_Wallet_Successful() throws NoSuchAlgorithmException, SignatureException, InvalidKeyException {
         TreeMap<String, Object> receiver = new TreeMap<String, Object>();
         receiver.put("name","Andy Lee");
-        receiver.put("merchantId",MERCHANTID);
+        receiver.put("merchantId","256619092316009");
         receiver.put("type","MERCHANT");
 
 
@@ -158,7 +158,7 @@ public class TransactionTest {
                 Util.getHeader(signature,MERCHANTID));
         transaction = new Transaction(connectionClient);
 
-        JSONObject response = transaction.transferStatusToWallet(param);
+        JSONObject response = transaction.checkWalletTransferStatus(param);
         assertEquals("SUCCESSFUL", response.get("message"));
     }
 

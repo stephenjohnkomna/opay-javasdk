@@ -36,21 +36,6 @@ public class ConnectionClient {
         return null;
     }
 
-
-   /* public JSONObject makePostRequest(HashMap<String, Object> parameters,String endpoint) {
-        try {
-            HttpResponse<JsonNode> result =
-                    Unirest.post(this.baseUrl+endpoint)
-                           .headers(headers)
-                    .body(Util.mapToJsonString(parameters))
-                    .asJson();
-            return result.getBody().getObject();
-        } catch (UnirestException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }*/
-
     public JSONObject makePostRequest(String endpoint) {
         try {
             HttpResponse<JsonNode> result =
@@ -64,98 +49,6 @@ public class ConnectionClient {
         return null;
     }
 
-  /*  *//**
-     * Used to send a GET request to the Opay API
-     *
-     * @return - JSONObject containing the API response
-     *//*
-    public JSONObject makeGetRequest() {
-        try {
-            HttpResponse<JsonNode> result = Unirest.get(url)
-                    .headers(headers)
-                    .asJson();
-            return result.getBody().getObject();
-        } catch (UnirestException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    *//**
-     * Used to send a GET request to the Opay API
-     *
-     * @param parameters - Map containing parameters to send
-     * @return - JSONObject containing API response
-     *//*
-    public JSONObject makeGetRequest(Map parameters) {
-        try {
-            HttpResponse<JsonNode> result = Unirest.get(url)
-                    .headers(headers)
-                    .queryString(parameters)
-                    .asJson();
-            return result.getBody().getObject();
-        } catch (UnirestException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    *//**
-     * Used to send a GET request to the Opay API
-     *
-     * @param parameters - HashMap containing parameters to send
-     * @return - JSONObject containing API response
-     *//*
-    public JSONObject makeGetRequest(HashMap<String, Object> parameters) {
-        try {
-            HttpResponse<JsonNode> result = Unirest.get(url)
-                    .headers(headers)
-                    .queryString(parameters)
-                    .asJson();
-            return result.getBody().getObject();
-        } catch (UnirestException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    *//**
-     * Used to send a PUT request to the Opay API
-     *
-     * @param parameters - Map containing parameters to send
-     * @return - JSONObject containing API response
-     *//*
-    public JSONObject makePutRequest(Map parameters) {
-        try {
-            HttpResponse<JsonNode> result = Unirest.put(url)
-                    .headers(headers)
-                    .fields(parameters)
-                    .asJson();
-            return result.getBody().getObject();
-        } catch (UnirestException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    *//**
-     * Used to send a PUT request to the Opay API
-     *
-     * @param parameters - HashMap containing parameters to send
-     * @return - JSONObject containing API response
-     *//*
-    public JSONObject makePutRequest(HashMap<String, Object> parameters) {
-        try {
-            HttpResponse<JsonNode> result = Unirest.get(url)
-                    .headers(headers)
-                    .queryString(parameters)
-                    .asJson();
-            return result.getBody().getObject();
-        } catch (UnirestException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }*/
 
     /**
      * Called to shut down the background event loop

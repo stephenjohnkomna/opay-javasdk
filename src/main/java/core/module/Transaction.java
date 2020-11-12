@@ -23,11 +23,11 @@ public class Transaction {
         return this.connectionClient.makePostRequest(param,Endpoint.OPAY_TRANSFER_TOWALLET);
     }
 
-    public JSONObject transferToBankStatus(TreeMap<String, Object> param) {
+    public JSONObject checkBankTransferStatus(TreeMap<String, Object> param) {
         return this.connectionClient.makePostRequest(param,Endpoint.OPAY_TRANSFER_STATUS_TOBANKS);
     }
 
-    public JSONObject transferStatusToWallet(TreeMap<String, Object> param) {
+    public JSONObject checkWalletTransferStatus(TreeMap<String, Object> param) {
         return this.connectionClient.makePostRequest(param,Endpoint.OPAY_TRANSFER_STATUS_TOWALLET);
     }
 
