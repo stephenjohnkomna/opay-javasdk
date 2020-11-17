@@ -31,10 +31,11 @@ public class InquiryTest {
         assertEquals("SUCCESSFUL", response.get("message"));
     }
 
+
     @Test
     public void Test_Validate_Merchant_Successful() throws NoSuchAlgorithmException, SignatureException, InvalidKeyException {
         TreeMap<String, Object> param = new TreeMap<String, Object>();
-        param.put("email","zongjie.li@opay-inc.com");
+        param.put("email","aagboola@opay-inc.com");
 
         connectionClient = new ConnectionClient(BASEURL, Util.getHeader(PUBLICKEY,MERCHANTID));
         inquiry = new Inquiry(connectionClient);
@@ -59,7 +60,7 @@ public class InquiryTest {
     @Test
     public void Test_Verify_AccountAndReturnAllocatedAccountName_Successful() throws NoSuchAlgorithmException, SignatureException, InvalidKeyException {
         TreeMap<String, Object> param = new TreeMap<String, Object>();
-        param.put("bankCode","041");
+        param.put("bankCode","058");
         param.put("bankAccountNo","45345343434");
         param.put("countryCode","NG");
 

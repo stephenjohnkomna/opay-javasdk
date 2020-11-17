@@ -119,11 +119,16 @@ public class TransactionTest {
     }
 
 
+
+
     @Test
     public void Test_Transfer_To_Merchant_Wallet_Successful() throws NoSuchAlgorithmException, SignatureException, InvalidKeyException {
         TreeMap<String, Object> receiver = new TreeMap<String, Object>();
-        receiver.put("name","Andy Lee");
-        receiver.put("merchantId","256619092316009");
+       /* receiver.put("name","Andy Lee");
+        receiver.put("type","MERCHANT");
+        receiver.put("merchantId","256619092316009");*/
+        receiver.put("name","Stephen John");
+        receiver.put("merchantId","256620111650021");
         receiver.put("type","MERCHANT");
 
 
