@@ -20,9 +20,13 @@ public class CashoutTest {
     private ConnectionClient connectionClient;
     private static JSONObject transactionCheckStatusInput;
     private final String BASEURL ="http://sandbox.cashierapi.operapay.com/api/v3";
-    private final String MERCHANTID ="256620072116000";
+  /*  private final String MERCHANTID ="256620072116000";
     private final String PUBLICKEY ="OPAYPUB15953464969740.9412274406196679";
-    private final String PRIVATEKEY ="OPAYPRV15953464969740.6928713062784362";
+    private final String PRIVATEKEY ="OPAYPRV15953464969740.6928713062784362";*/
+
+    private final String MERCHANTID ="256620111818011";
+    private final String PUBLICKEY ="OPAYPUB16056979384780.5185444401244956";
+    private final String PRIVATEKEY ="OPAYPRV16056979384780.07228697990850907";
 
 
     @Test
@@ -42,8 +46,8 @@ public class CashoutTest {
         param.put("userRequestIp","123.123.123.123");
         param.put("amount","100");
         param.put("currency","NGN");
-        param.put("payMethods", new String[]{"account", "qrcode"});
-        param.put("payTypes",new String [] {"BalancePayment", "BonusPayment"});
+        param.put("payMethods", new String[]{"account", "qrcode","bankCard","bankAccount"});
+        param.put("payTypes",new String [] {"BalancePayment", "BonusPayment","OWealth"});
         param.put("callbackUrl","https://you.domain.com/callbackUrl");
         param.put("returnUrl","https://you.domain.com/returnUrl");
         param.put("expireAt","10");

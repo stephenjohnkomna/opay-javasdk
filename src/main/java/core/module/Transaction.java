@@ -31,8 +31,8 @@ public class Transaction {
         return this.connectionClient.makePostRequest(param,Endpoint.OPAY_TRANSFER_STATUS_TOWALLET);
     }
 
-    public JSONObject allSupportingBanks() {
-        return this.connectionClient.makePostRequest(Endpoint.OPAY_TRANSFER_SUPPORT_BANKS);
+    public JSONObject allSupportingBanks(TreeMap<String, Object> param) {
+        return this.connectionClient.makePostRequest(param,Endpoint.OPAY_TRANSFER_SUPPORT_BANKS);
     }
 
     public JSONObject allSupportingCountries() {

@@ -76,7 +76,7 @@ public class TransactionTest {
     @Test
     public void Test_Transfer_To_User_Wallet_Successful() throws NoSuchAlgorithmException, SignatureException, InvalidKeyException {
         TreeMap<String, Object> receiver = new TreeMap<String, Object>();
-        receiver.put("name","Andy Lee");
+        receiver.put("name","Adny Lee");
         receiver.put("phoneNumber","+2348131393827");
         receiver.put("type","USER");
 
@@ -124,12 +124,12 @@ public class TransactionTest {
     @Test
     public void Test_Transfer_To_Merchant_Wallet_Successful() throws NoSuchAlgorithmException, SignatureException, InvalidKeyException {
         TreeMap<String, Object> receiver = new TreeMap<String, Object>();
-       /* receiver.put("name","Andy Lee");
+        receiver.put("name","Andy Lee");
         receiver.put("type","MERCHANT");
-        receiver.put("merchantId","256619092316009");*/
-        receiver.put("name","Stephen John");
+        receiver.put("merchantId","256620111818011");
+      /*  receiver.put("name","Stephen John");
         receiver.put("merchantId","256620111650021");
-        receiver.put("type","MERCHANT");
+        receiver.put("type","MERCHANT");*/
 
 
         TreeMap<String, Object> param = new TreeMap<String, Object>();
@@ -170,10 +170,13 @@ public class TransactionTest {
 
     @Test
     public void Test_Get_All_Supporting_Banks() throws NoSuchAlgorithmException, SignatureException, InvalidKeyException {
+        TreeMap<String, Object> param = new TreeMap<String, Object>();
+        param.put("countryCode","NG");
+
         connectionClient = new ConnectionClient(BASEURL, Util.getHeader(PUBLICKEY,MERCHANTID));
         transaction = new Transaction(connectionClient);
 
-        JSONObject response = transaction.allSupportingBanks();
+        JSONObject response = transaction.allSupportingBanks(param);
         assertEquals("SUCCESSFUL", response.get("message"));
     }
 
