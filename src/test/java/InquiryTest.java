@@ -18,8 +18,8 @@ public class InquiryTest {
     private Inquiry inquiry;
     private ConnectionClient connectionClient;
     private final String BASEURL ="http://sandbox.cashierapi.operapay.com/api/v3";
-    private final String MERCHANTID ="256620072116000";
-    private final String PUBLICKEY ="OPAYPUB15953464969740.9412274406196679";
+    private final String MERCHANTID ="256620112018031";
+    private final String PUBLICKEY ="OPAYPUB16058777635980.9961229244591103";
 
 
     @Test
