@@ -1,0 +1,17 @@
+name: CI
+on:
+  push: { branches: [ main, master ] }
+  pull_request: { branches: [ main, master ] }
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy: { matrix: { java: [17, 21] } }
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with: { distribution: temurin, java-version: ${{ matrix.java }}, cache: maven }
+      - run: mvn -B verify
+  codeql:
+    permissions: { security-events: write }
+    uses: github/codeql-action/.github/workflows/codeql.yml@v3
+    with: { languages: 'java' }
