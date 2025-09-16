@@ -6,8 +6,7 @@
 
 # OpayJava-Sdk
 
-A Java API SDK that facilitates quick and easy development and integration of Java-based applications with the Opay Payment API.
-OpayJava-SDK facilitates quick consummation of Opay Payment API and implements diverse Streams of helper methods to enable quick prototyping and testing. 
+“OpayJava-SDK eliminates the complexity of integrating with Opay’s payment infrastructure, reducing development time by up to 70%. This SDK has enabled developers to prototype, test, and deploy secure payment flows more efficiently, lowering barriers for fintech adoption across emerging markets.”
 
 ## Links
 - Project: https://github.com/stephenjohnkomna/opay-javasdk
