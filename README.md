@@ -1,4 +1,8 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Java](https://img.shields.io/badge/Java-17-blue)]()
+[![Build Status](https://img.shields.io/badge/build-passing-brightgreen)]()
+[![Maven Central](https://img.shields.io/badge/maven--central-available-success)]()
+[![Contributions](https://img.shields.io/badge/contributions-welcome-orange)]()
 
 # OpayJava-Sdk
 
