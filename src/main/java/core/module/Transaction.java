@@ -3,8 +3,6 @@ package core.module;
 import core.ConnectionClient;
 import core.Endpoint;
 import org.json.JSONObject;
-
-import java.util.HashMap;
 import java.util.TreeMap;
 
 public class Transaction {
